@@ -1,4 +1,24 @@
 {
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "utils": "./utils",
+          "atoms": "./components/atoms",
+          "molecules": "./components/molecules",
+          "organisms": "./components/organisms",
+          "styles": "./styles",
+          "constants": "./constants"
+        }
+      }
+    ],
+    "@babel/plugin-transform-react-jsx-source",
+    "@babel/proposal-optional-chaining",
+    "@babel/proposal-nullish-coalescing-operator",
+    "@babel/plugin-transform-react-display-name"
+  ],
   "env": {
     "test": {
       "presets": [
