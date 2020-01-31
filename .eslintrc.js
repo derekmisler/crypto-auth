@@ -30,12 +30,8 @@ module.exports = {
   rules: {
     camelcase: ERROR,
     semi: [ERROR, 'never'],
-    'no-alert': OFF,
-    'class-methods-use-this': OFF,
-    'arrow-parens': [ERROR, 'as-needed'],
-    'global-require': OFF,
-    'no-underscore-dangle': OFF,
-    'no-unreachable': ERROR,
+    indent: [ERROR, 2],
+    'react/jsx-no-bind': OFF,
     'react-hooks/rules-of-hooks': ERROR,
     'react-hooks/exhaustive-deps': WARN
   },
