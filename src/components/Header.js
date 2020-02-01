@@ -1,3 +1,4 @@
+import { Fragment } from 'preact'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const Header = () => {
+const Header = ({ signOut, isAuthed }) => {
   const classes = useStyles()
   return (
     <AppBar position='relative' component='nav' >
@@ -21,8 +22,16 @@ const Header = () => {
         <Typography variant='h6' noWrap className={classes.title}>
           Blockchain Authentication Example
         </Typography>
-        <Button href='/dashboard'>Dashboard</Button>
-        <Button href='/'>Log out</Button>
+        { isAuthed
+          ? (
+            <Fragment>
+              <Button href='/dashboard'>Dashboard</Button>
+              <Button onClick={signOut}>Log out</Button>
+             </Fragment>
+          ) : (
+            <Button href='/login'>Log in</Button>
+          )
+        }
       </Toolbar>
     </AppBar>
   )

@@ -12,6 +12,7 @@ import Dashboard from '../routes/Dashboard'
 
 export const App = () => {
   const [isAuthed, setIsAuthed] = useState(false)
+  const [loginState, setLoginState] = useState(null)
   const [redirectRoute, setRedirectRoute] = useState(ROUTES.login)
 
   useEffect(() => {
@@ -29,12 +30,15 @@ export const App = () => {
 
   return (
     <div id='app'>
-      <Header />
+      <Header
+        signOut={loginState?.signOut}
+        isAuthed={isAuthed}
+      />
       <Container component='main' maxWidth='md'>
         <Box component='section' p={4}>
           <Router onChange={handleRoute}>
             <Redirect path={ROUTES.root} to={redirectRoute} />
-            <Login path={ROUTES.login} handleAuth={setIsAuthed} />
+            <Login path={ROUTES.login} getIsAuthed={setIsAuthed} getLoginState={setLoginState} />
             <Dashboard path={ROUTES.dashboard} auth />
           </Router>
         </Box>

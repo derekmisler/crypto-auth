@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import useFortmatic from '../utils/useFortmatic'
 
-const Login = ({ handleAuth }) => {
+const Login = ({ getIsAuthed, getLoginState }) => {
   const [loginState, setLoginState] = useState(null)
   const [isSignedIn, setIsIgnedIn] = useState(false)
 
@@ -13,12 +13,13 @@ const Login = ({ handleAuth }) => {
     if (loginState) {
       await loginState.signIn()
       setIsIgnedIn(loginState.isSignedIn())
+      getLoginState(loginState)
     }
   }, [loginState])
 
   useEffect(() => {
     if (isSignedIn) {
-      handleAuth(isSignedIn)
+      getIsAuthed(isSignedIn)
     }
   }, [isSignedIn])
 
