@@ -1,33 +1,24 @@
-import { route } from 'preact-router'
 import { useEffect, useState } from 'preact/hooks'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import useFortmatic from '../utils/useFortmatic'
-import { ROUTES } from '../constants/routes'
 
-const Login = () => {
+const Login = ({ handleAuth }) => {
   const [loginState, setLoginState] = useState(null)
   const [isSignedIn, setIsIgnedIn] = useState(false)
 
   useEffect(async () => {
     if (loginState) {
-      // await loginState.signIn()
-      console.log('----------')
-      console.log('loginState', loginState)
-      console.log('^^^^^^^^^^')
+      await loginState.signIn()
       setIsIgnedIn(loginState.isSignedIn())
     }
   }, [loginState])
 
   useEffect(() => {
-    console.log('----------')
-    console.log('isSignedIn', isSignedIn)
-    console.log('^^^^^^^^^^')
-    
     if (isSignedIn) {
-      route(ROUTES.dashboard)
+      handleAuth(isSignedIn)
     }
   }, [isSignedIn])
 
