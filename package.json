@@ -16,7 +16,7 @@
     "start": "per-env",
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
-    "build": "preact build --service-worker --production",
+    "build": "preact build --service-worker --production --no-prerender",
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
     "lint": "eslint src",
