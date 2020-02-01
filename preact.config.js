@@ -8,7 +8,7 @@ export default function(config, env, helpers) {
     plugin.definitions,
     Object.keys(parsed || {}).reduce((env, key) => ({
       ...env,
-      [key]: JSON.stringify(parsed[key])
+      [`process.env.${key}`]: JSON.stringify(parsed[key])
     }), {})
   )
 }

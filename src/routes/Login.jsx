@@ -32,7 +32,7 @@ const Login = () => {
   }, [isSignedIn])
 
   const logIn = () => {
-    setLoginState(useFortmatic(FORTMATIC_KEY))
+    setLoginState(useFortmatic(process.env.FORTMATIC_KEY))
   }
   
   return (
