@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "FORTMATIC_KEY": "@fortmatic_key"
+    }
+  }
+}

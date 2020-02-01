@@ -1,14 +1,25 @@
-import { useState, useEffect, useCallback } from 'preact/hooks'
+import { useState, useEffect, useRef, useLayoutEffect } from 'preact/hooks'
 import Web3 from 'web3'
 import Fortmatic from 'fortmatic'
-import { usePromise } from './usePromise'
+
+const usePromise = () => {
+  const ref = []
+  const container = useRef(ref)
+
+  ref[0] = new Promise((resolve, reject) => {
+    ref[1] = resolve
+    ref[2] = reject
+  })
+
+  return container.current
+}
 
 const useFortmatic = apiKey => {
   const [accounts, setAccounts] = useState([])
   const [web3Ready, setWeb3Ready] = usePromise()
   const [web3IsInitialized, setWeb3IsInitialized] = useState(false)
 
-  const signIn = useCallback(async () => {
+  const signIn = async () => {
     const { web3 } = await web3Ready
     // Get the current user account addresses.
     // Auth if needed.
@@ -17,6 +28,9 @@ const useFortmatic = apiKey => {
     return web3.eth
       .getAccounts()
       .then(newAccounts => {
+        console.log('----------')
+        console.log('newAccounts', newAccounts)
+        console.log('^^^^^^^^^^')
         if (newAccounts[0] !== accounts[0]) setAccounts(newAccounts)
         return newAccounts
       })
@@ -25,7 +39,7 @@ const useFortmatic = apiKey => {
         setAccounts(newAccounts)
         return newAccounts
       })
-  }, [web3Ready, accounts])
+  }
 
   const signOut = async () => {
     const { fm } = await web3Ready
@@ -35,13 +49,13 @@ const useFortmatic = apiKey => {
     setAccounts([])
   }
 
-  const isSignedIn = accounts => accounts.length > 0
+  const isSignedIn = () => accounts && accounts.length > 0
 
   // Fire only once after components mounts.
   useEffect(() => {
     const initializeWeb3 = async () => {
       const fm = new Fortmatic(apiKey)
-      const web3 = new Web3(fm.getProvider());
+      const web3 = new Web3(fm.getProvider())
       // This needs to run before we update state
       // if we want to enable users to stay signed
       // in between page reloads.
@@ -58,7 +72,6 @@ const useFortmatic = apiKey => {
     signOut,
     signIn,
     isSignedIn,
-    web3Ready,
     web3IsInitialized
   }
 }

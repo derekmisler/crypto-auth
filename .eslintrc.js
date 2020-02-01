@@ -15,6 +15,7 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    FORTMATIC_KEY: 'someKey'
   },
   parserOptions: {
     ecmaFeatures: {
@@ -31,7 +32,9 @@ module.exports = {
     camelcase: ERROR,
     semi: [ERROR, 'never'],
     indent: [ERROR, 2],
+    'jsx-quotes': [ERROR, 'prefer-single'],
     'react/jsx-no-bind': OFF,
+    'react/jsx-indent-props': OFF,
     'react-hooks/rules-of-hooks': ERROR,
     'react-hooks/exhaustive-deps': WARN
   },
