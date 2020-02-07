@@ -16,11 +16,17 @@ const usePromise = () => {
 
 const useFortmatic = apiKey => {
   const [accounts, setAccounts] = useState([])
-  const [web3Ready, setWeb3Ready] = usePromise()
+  const [web3Ready, setWeb3Ready] = useState({})
   const [web3IsInitialized, setWeb3IsInitialized] = useState(false)
 
   const signIn = async () => {
-    const { web3 } = await web3Ready
+    console.log('----------')
+    console.log('web3Ready', web3Ready)
+    console.log('^^^^^^^^^^')
+    const { web3 } = web3Ready
+    console.log('----------')
+    console.log('web3', web3)
+    console.log('^^^^^^^^^^')
     // Get the current user account addresses.
     // Auth if needed.
     // signIn returns a promise that should wait for signIn
@@ -42,7 +48,7 @@ const useFortmatic = apiKey => {
   }
 
   const signOut = async () => {
-    const { fm } = await web3Ready
+    const { fm } = web3Ready
     // signOut returns a promise that will wait
     // until signout is complete to resolve.
     await fm.user.logout()
@@ -53,19 +59,17 @@ const useFortmatic = apiKey => {
 
   // Fire only once after components mounts.
   useEffect(() => {
-    const initializeWeb3 = async () => {
-      const fm = new Fortmatic(apiKey)
-      const web3 = new Web3(fm.getProvider())
-      // This needs to run before we update state
-      // if we want to enable users to stay signed
-      // in between page reloads.
-      (await fm.user.isLoggedIn()) && signIn()
-      setWeb3Ready({ fm, web3 })
-      setWeb3IsInitialized(true)
-    }
-
-    initializeWeb3()
-  }, [apiKey, setWeb3Ready, signIn])
+    const fm = new Fortmatic(apiKey)
+    const web3 = new Web3(fm.getProvider())
+    console.log('----------')
+    console.log('fm', fm)
+    console.log('^^^^^^^^^^')
+    // This needs to run before we update state
+    // if we want to enable users to stay signed
+    // in between page reloads.
+    setWeb3Ready({ fm, web3 })
+    setWeb3IsInitialized(true)
+  }, [apiKey])
 
   return {
     accounts,

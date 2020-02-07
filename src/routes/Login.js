@@ -9,9 +9,16 @@ const Login = ({ getIsAuthed, getLoginState }) => {
   const [loginState, setLoginState] = useState(null)
   const [isSignedIn, setIsIgnedIn] = useState(false)
 
-  useEffect(async () => {
+  useEffect(() => {
+    setLoginState(useFortmatic(process.env.FORTMATIC_KEY))
+  }, [])
+
+  useEffect(() => {
     if (loginState) {
-      await loginState.signIn()
+      console.log('----------')
+      console.log('loginState', loginState)
+      console.log('^^^^^^^^^^')
+      loginState.signIn()
       setIsIgnedIn(loginState.isSignedIn())
       getLoginState(loginState)
     }
@@ -22,10 +29,6 @@ const Login = ({ getIsAuthed, getLoginState }) => {
       getIsAuthed(isSignedIn)
     }
   }, [isSignedIn])
-
-  const logIn = () => {
-    setLoginState(useFortmatic(process.env.FORTMATIC_KEY))
-  }
   
   return (
     <Paper>
@@ -34,7 +37,7 @@ const Login = ({ getIsAuthed, getLoginState }) => {
       </Box>
       { !isSignedIn && (
         <Box p={2}>
-          <Button size='large' variant='contained' onClick={logIn}>Log in</Button>
+          <Button size='large' variant='contained' onClick={loginState?.signIn}>Log in</Button>
         </Box>
       )}
     </Paper>
