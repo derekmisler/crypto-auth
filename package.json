@@ -1,5 +1,5 @@
 {
-  "name": "crypto-auth",
+  "name": "@derekmisler/crypto-auth",
   "version": "1.0.0",
   "description": "Blockchain authentication",
   "repository": {
